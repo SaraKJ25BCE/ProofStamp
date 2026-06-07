@@ -156,33 +156,33 @@ export default function SharePage() {
 
   return (
     <Layout>
-      <div className="max-w-4xl mx-auto animate-fade-up">
-        <div className="apple-glass-panel rounded-[3rem] overflow-hidden apple-shadow border border-white/10">
+      <div className="max-w-4xl mx-auto animate-fade-up px-4 sm:px-0">
+        <div className="apple-glass-panel rounded-[2rem] md:rounded-[3rem] overflow-hidden apple-shadow border border-white/10">
           {/* Image display */}
           {stamp.category === 'image' && (stamp.originalFileUrl || stamp.stampedFileUrl) && (
-            <div className="relative bg-black flex items-center justify-center min-h-[400px] max-h-[600px] group">
+            <div className="relative bg-black flex items-center justify-center min-h-[300px] md:min-h-[400px] max-h-[600px] group">
               <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <img
                 src={stamp.stampedFileUrl || stamp.originalFileUrl}
                 alt={stamp.title}
                 className="max-w-full max-h-[600px] object-contain transition-transform duration-700 group-hover:scale-[1.02]"
               />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/80 to-transparent p-8 pt-24">
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/80 to-transparent p-6 md:p-8 pt-24">
                 <div className="flex items-end justify-between">
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-3 md:gap-4">
                     {passport?.user?.avatarUrl ? (
-                      <img src={passport.user.avatarUrl} alt="" className="h-14 w-14 rounded-full border-2 border-white/20 shadow-xl" />
+                      <img src={passport.user.avatarUrl} alt="" className="h-10 w-10 md:h-14 md:w-14 rounded-full border-2 border-white/20 shadow-xl" />
                     ) : (
-                      <div className="h-14 w-14 rounded-full bg-white/10 flex items-center justify-center border border-white/10 shadow-xl">
-                        <Shield className="h-6 w-6 text-white/50" />
+                      <div className="h-10 w-10 md:h-14 md:w-14 rounded-full bg-white/10 flex items-center justify-center border border-white/10 shadow-xl">
+                        <Shield className="h-5 w-5 md:h-6 md:w-6 text-white/50" />
                       </div>
                     )}
                     <div>
-                      <p className="text-white font-semibold text-lg">{passport?.displayName}</p>
-                      <p className="text-white/50 text-sm font-medium">@{passport?.username}</p>
+                      <p className="text-white font-semibold text-base md:text-lg">{passport?.displayName}</p>
+                      <p className="text-white/50 text-xs md:text-sm font-medium">@{passport?.username}</p>
                     </div>
                   </div>
-                  <div className="px-4 py-1.5 rounded-full bg-green-500/20 text-green-300 border border-green-500/30 backdrop-blur-md flex items-center font-medium text-sm shadow-xl">
+                  <div className="hidden sm:flex px-4 py-1.5 rounded-full bg-green-500/20 text-green-300 border border-green-500/30 backdrop-blur-md items-center font-medium text-sm shadow-xl">
                     <CheckCircle2 className="h-4 w-4 mr-1.5" />
                     Verified Owner
                   </div>
@@ -191,11 +191,11 @@ export default function SharePage() {
             </div>
           )}
 
-          <div className="p-8 sm:p-12">
-            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6 mb-8">
+          <div className="p-6 sm:p-12">
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 md:gap-6 mb-8">
               <div>
-                <h1 className="text-4xl font-semibold tracking-tight text-white mb-2">{stamp.title}</h1>
-                {stamp.description && <p className="text-white/60 text-lg">{stamp.description}</p>}
+                <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-2">{stamp.title}</h1>
+                {stamp.description && <p className="text-white/60 text-base md:text-lg">{stamp.description}</p>}
               </div>
               <div className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg font-mono text-sm text-white/50 shrink-0">
                 {stamp.id}

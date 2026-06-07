@@ -99,27 +99,27 @@ export default function Dashboard() {
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
-            <h1 className="text-4xl font-semibold tracking-tight text-white mb-2">
+            <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-2">
               Your Protected Assets
             </h1>
-            <p className="text-white/50 text-lg font-medium">
+            <p className="text-white/50 text-base md:text-lg font-medium">
               Manage and monitor your cryptographically secured files.
             </p>
           </div>
-          <div className="flex gap-4">
+          <div className="flex flex-wrap gap-3 md:gap-4">
             <Button
               variant="ghost"
               onClick={() => setShowDeveloperSettings(!showDeveloperSettings)}
-              className="text-white/40 hover:text-white hover:bg-white/5 rounded-full px-6 transition-colors h-12"
+              className="text-white/40 hover:text-white hover:bg-white/5 rounded-full px-4 md:px-6 transition-colors h-10 md:h-12 flex-1 md:flex-none justify-center"
             >
               {showDeveloperSettings ? "Hide API Keys" : "API Keys"}
             </Button>
             <Button
               asChild
-              className="bg-white text-black hover:bg-white/90 rounded-full px-6 h-12 font-semibold shadow-lg transition-all hover:scale-105"
+              className="bg-white text-black hover:bg-white/90 rounded-full px-4 md:px-6 h-10 md:h-12 font-semibold shadow-lg transition-all hover:scale-105 flex-1 md:flex-none justify-center"
             >
               <Link to="/stamp">
-                <Plus className="h-5 w-5 mr-2" />
+                <Plus className="h-4 w-4 md:h-5 md:w-5 mr-2" />
                 Protect New File
               </Link>
             </Button>
@@ -180,15 +180,15 @@ export default function Dashboard() {
               ))}
             </div>
           ) : stamps.length === 0 ? (
-            <div className="apple-glass-panel rounded-[3rem] p-20 text-center apple-shadow border border-white/10">
-              <div className="mx-auto h-24 w-24 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-8">
-                <FileImage className="h-10 w-10 text-white/40" />
+            <div className="apple-glass-panel rounded-[2rem] md:rounded-[3rem] p-8 md:p-20 text-center apple-shadow border border-white/10">
+              <div className="mx-auto h-16 w-16 md:h-24 md:w-24 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-6 md:mb-8">
+                <FileImage className="h-8 w-8 md:h-10 md:w-10 text-white/40" />
               </div>
-              <h3 className="text-3xl font-semibold text-white tracking-tight mb-4">No files protected yet</h3>
-              <p className="text-white/50 text-lg font-medium max-w-md mx-auto mb-10 leading-relaxed">
+              <h3 className="text-2xl md:text-3xl font-semibold text-white tracking-tight mb-3 md:mb-4">No files protected yet</h3>
+              <p className="text-white/50 text-base md:text-lg font-medium max-w-md mx-auto mb-8 md:mb-10 leading-relaxed px-4 md:px-0">
                 Secure your first piece of intellectual property using our zero-knowledge cryptographic engine.
               </p>
-              <Button asChild size="lg" className="h-14 px-8 rounded-full bg-white text-black hover:bg-white/90 font-semibold shadow-xl transition-transform hover:scale-105">
+              <Button asChild size="lg" className="h-12 md:h-14 px-6 md:px-8 rounded-full bg-white text-black hover:bg-white/90 font-semibold shadow-xl transition-transform hover:scale-105">
                 <Link to="/stamp">
                   Protect Your First File
                 </Link>

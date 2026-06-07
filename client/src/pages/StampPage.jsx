@@ -256,12 +256,12 @@ export default function StampPage() {
   if (result) {
     return (
       <Layout>
-        <div className="max-w-3xl mx-auto animate-fade-up">
-          <div className="apple-glass-panel rounded-[2.5rem] p-10 apple-shadow text-center">
-            <div className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-green-500/10 border border-green-500/20 mb-6 shadow-[0_0_30px_rgba(34,197,94,0.15)]">
-              <CheckCircle2 className="h-10 w-10 text-green-400 drop-shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
+        <div className="max-w-3xl mx-auto animate-fade-up px-4 sm:px-0">
+          <div className="apple-glass-panel rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 apple-shadow text-center">
+            <div className="inline-flex h-16 w-16 md:h-20 md:w-20 items-center justify-center rounded-full bg-green-500/10 border border-green-500/20 mb-4 md:mb-6 shadow-[0_0_30px_rgba(34,197,94,0.15)]">
+              <CheckCircle2 className="h-8 w-8 md:h-10 md:w-10 text-green-400 drop-shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
             </div>
-            <h2 className="text-3xl font-bold mb-3 text-white tracking-tight">{MARKETING.stampSuccessTitle}</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-2 md:mb-3 text-white tracking-tight">{MARKETING.stampSuccessTitle}</h2>
             <p className="text-white/50 mb-8 font-medium">
               {TSA_BADGES[displayStamp?.tsaTier || 'development']} · {BSA_FRAME.colloquialLabel}{' '}
               {legalReady ? 'ready' : 'generating…'}
@@ -494,13 +494,13 @@ export default function StampPage() {
   if (bulkResults) {
     return (
       <Layout>
-        <div className="max-w-2xl mx-auto animate-fade-up">
-          <div className="apple-glass-panel rounded-[2.5rem] p-10 apple-shadow">
-            <div className="text-center mb-8">
-              <div className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-green-500/10 border border-green-500/20 mb-6 shadow-[0_0_30px_rgba(34,197,94,0.15)]">
-                <CheckCircle2 className="h-10 w-10 text-green-400 drop-shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
+        <div className="max-w-2xl mx-auto animate-fade-up px-4 sm:px-0">
+          <div className="apple-glass-panel rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 apple-shadow">
+            <div className="text-center mb-6 md:mb-8">
+              <div className="inline-flex h-16 w-16 md:h-20 md:w-20 items-center justify-center rounded-full bg-green-500/10 border border-green-500/20 mb-4 md:mb-6 shadow-[0_0_30px_rgba(34,197,94,0.15)]">
+                <CheckCircle2 className="h-8 w-8 md:h-10 md:w-10 text-green-400 drop-shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
               </div>
-              <h2 className="text-3xl font-bold text-white tracking-tight">{bulkResults.count} Files Protected!</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">{bulkResults.count} Files Protected!</h2>
               <p className="text-white/50 mt-2 font-medium">All files are now securely registered and protected</p>
             </div>
 
@@ -531,10 +531,10 @@ export default function StampPage() {
 
   return (
     <Layout>
-      <div className="max-w-3xl mx-auto animate-fade-up">
-        <div className="text-center mb-10">
-          <h1 className="text-4xl font-semibold tracking-tight text-white mb-3">Protect Your Work</h1>
-          <p className="text-white/50 text-lg font-medium max-w-lg mx-auto">
+      <div className="max-w-3xl mx-auto animate-fade-up px-4 sm:px-0">
+        <div className="text-center mb-8 md:mb-10 mt-6 md:mt-0">
+          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-2 md:mb-3">Protect Your Work</h1>
+          <p className="text-white/50 text-base md:text-lg font-medium max-w-lg mx-auto">
             Register any digital file — images, audio, video, code, documents, designs
           </p>
         </div>
@@ -563,12 +563,12 @@ export default function StampPage() {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
           {/* AirDrop Style Drop Zone */}
-          <div className="apple-glass-panel rounded-[3rem] p-2 apple-shadow">
+          <div className="apple-glass-panel rounded-[2rem] md:rounded-[3rem] p-2 apple-shadow">
             <div
               {...getRootProps()}
-              className={`relative overflow-hidden rounded-[2.5rem] border-2 border-dashed transition-all duration-500 flex flex-col items-center justify-center min-h-[320px] cursor-pointer group ${
+              className={`relative overflow-hidden rounded-[1.75rem] md:rounded-[2.5rem] border-2 border-dashed transition-all duration-500 flex flex-col items-center justify-center min-h-[260px] md:min-h-[320px] cursor-pointer group ${
                 isDragActive ? 'border-white/40 bg-white/10 scale-[0.98]' : 'border-white/10 hover:border-white/30 bg-white/[0.02] hover:bg-white/[0.04]'
               }`}
             >
@@ -644,8 +644,8 @@ export default function StampPage() {
           </div>
 
           {/* Form Fields */}
-          <div className="apple-glass-panel rounded-[2.5rem] p-8 apple-shadow space-y-6">
-            <div className="mb-6">
+          <div className="apple-glass-panel rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-8 apple-shadow space-y-4 md:space-y-6">
+            <div className="mb-4 md:mb-6">
               <h2 className="text-xl font-semibold tracking-tight text-white mb-1">Protection Details</h2>
               <p className="text-sm text-white/50 font-medium">
                 {mode === 'bulk'

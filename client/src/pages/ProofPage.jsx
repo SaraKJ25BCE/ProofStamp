@@ -74,11 +74,11 @@ export default function ProofPage() {
       <div className="max-w-5xl mx-auto animate-fade-up space-y-8">
         
         {/* Header Section */}
-        <div className="apple-glass-panel rounded-[2.5rem] p-10 apple-shadow flex flex-col md:flex-row md:items-center justify-between gap-8">
+        <div className="apple-glass-panel rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 apple-shadow flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-8">
           <div>
-            <div className="flex items-center gap-3 mb-3">
-              <Fingerprint className="h-8 w-8 text-indigo-400" />
-              <h1 className="text-3xl font-bold tracking-tight text-white">Authenticity Proof Bundle</h1>
+            <div className="flex items-center gap-3 mb-2 md:mb-3">
+              <Fingerprint className="h-6 w-6 md:h-8 md:w-8 text-indigo-400" />
+              <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-white">Authenticity Proof Bundle</h1>
             </div>
             <p className="text-white/60 font-medium flex items-center gap-2">
               <span className="bg-white/10 text-white/80 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase border border-white/5">
