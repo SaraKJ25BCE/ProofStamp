@@ -1,7 +1,5 @@
 databases:
   - name: proofstamp-db
-    databaseName: proofstamp
-    user: postgres
 
 services:
   # Python Stego Service (Requires Docker to install system dependencies like libgl)
