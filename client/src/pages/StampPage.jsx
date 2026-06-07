@@ -268,19 +268,19 @@ export default function StampPage() {
             </p>
 
             {showMonitorPrompt && (
-              <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-2xl p-5 mb-8 text-left backdrop-blur-sm">
-                <p className="text-base font-semibold text-indigo-300 flex items-center gap-2">
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-5 mb-8 text-left backdrop-blur-sm">
+                <p className="text-base font-semibold text-white flex items-center gap-2">
                   <Radar className="h-5 w-5" /> Enable theft monitoring?
                 </p>
-                <p className="text-sm text-indigo-200/70 mt-2 mb-4 leading-relaxed">
+                <p className="text-sm text-white/70 mt-2 mb-4 leading-relaxed">
                   {MARKETING.monitoringLanding}
                 </p>
                 <div className="flex gap-3">
-                  <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl" onClick={enableMonitoring} disabled={monitorLoading}>
+                  <Button size="sm" className="bg-white hover:bg-white/90 text-black rounded-xl" onClick={enableMonitoring} disabled={monitorLoading}>
                     {monitorLoading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
                     Enable monitoring
                   </Button>
-                  <Button size="sm" variant="ghost" className="text-indigo-300 hover:text-indigo-200 hover:bg-indigo-500/20 rounded-xl" onClick={() => setShowMonitorPrompt(false)}>Later</Button>
+                  <Button size="sm" variant="ghost" className="text-white/70 hover:text-white hover:bg-white/10 rounded-xl" onClick={() => setShowMonitorPrompt(false)}>Later</Button>
                 </div>
               </div>
             )}

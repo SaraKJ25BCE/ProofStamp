@@ -23,11 +23,11 @@ export default function LegalLayout({ title, children }) {
         <div className="prose prose-invert max-w-none text-white/70 space-y-4 text-sm leading-relaxed">
           {children}
         </div>
-        <footer className="mt-12 pt-8 border-t text-sm text-muted-foreground flex flex-wrap gap-4">
-          <Link to="/terms" className="hover:text-indigo-600">Terms</Link>
-          <Link to="/privacy" className="hover:text-indigo-600">Privacy</Link>
-          <Link to="/legal-guide" className="hover:text-indigo-600">Legal Guide</Link>
-          <Link to="/register-copyright" className="hover:text-indigo-600">Copyright Registration</Link>
+        <footer className="mt-12 pt-8 border-t border-white/10 text-sm text-white/50 flex flex-wrap gap-6">
+          <Link to="/terms" className="hover:text-white transition-colors">Terms</Link>
+          <Link to="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+          <Link to="/legal-guide" className="hover:text-white transition-colors">Legal Guide</Link>
+          <Link to="/register-copyright" className="hover:text-white transition-colors">Copyright Registration</Link>
         </footer>
       </main>
     </div>

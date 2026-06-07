@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from '@/lib/auth';
+import ErrorBoundary from '@/components/ErrorBoundary';
 import Login from '@/pages/Login';
 import AuthCallback from '@/pages/AuthCallback';
 import Setup from '@/pages/Setup';
@@ -66,7 +67,7 @@ function AppRoutes() {
       <Route path="/register-copyright" element={<RegisterCopyrightPage />} />
       <Route path="/p/:stampId" element={<SharePage />} />
       <Route path="/u/:username" element={<PublicPassport />} />
-      <Route path="/" element={user ? <Navigate to="/dashboard" replace /> : <LandingPage />} />
+      <Route path="/" element={<LandingPage />} />
     </Routes>
   );
 }
@@ -76,7 +77,9 @@ export default function App() {
     <BrowserRouter>
       <ToastProvider>
         <AuthProvider>
-          <AppRoutes />
+          <ErrorBoundary>
+            <AppRoutes />
+          </ErrorBoundary>
         </AuthProvider>
       </ToastProvider>
     </BrowserRouter>

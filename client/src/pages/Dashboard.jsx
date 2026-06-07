@@ -42,10 +42,10 @@ export default function Dashboard() {
         api.get('/takedowns').catch(() => ({ data: { takedowns: [] } })),
         api.get('/passport/me/usage').catch(() => ({ data: null })),
       ]);
-      setStamps(passportRes.data.passport.stamps || []);
+      setStamps((passportRes.data.passport.stamps || []).filter(Boolean));
       setUsage(usageRes.data);
-      setAlerts((alertRes.data.alerts || []).filter((a) => a.status === 'new'));
-      setDraftTakedowns((tdRes.data.takedowns || []).filter((t) => t.status === 'draft'));
+      setAlerts((alertRes.data.alerts || []).filter(Boolean).filter((a) => a.status === 'new'));
+      setDraftTakedowns((tdRes.data.takedowns || []).filter(Boolean).filter((t) => t.status === 'draft'));
     } catch (err) {
       console.error(err);
     } finally {

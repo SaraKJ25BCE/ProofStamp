@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useAuth } from '@/lib/auth';
 import { Button } from '@/components/ui/button';
 import {
   Shield, Lock, Search, CheckCircle2, ArrowRight, Fingerprint,
@@ -7,6 +8,8 @@ import {
 import { MARKETING, BSA_FRAME } from '@/content/legalCopy';
 
 export default function LandingPage() {
+  const { user } = useAuth();
+
   return (
     <div className="min-h-screen bg-black text-white font-sans selection:bg-white/20 selection:text-white overflow-hidden">
       {/* Global Ambient Glow */}
@@ -21,9 +24,15 @@ export default function LandingPage() {
           </div>
           <div className="flex items-center gap-4 text-sm font-medium">
             <Link to="/verify" className="text-white/50 hover:text-white transition-colors hidden sm:block">Verify</Link>
-            <Button size="sm" className="bg-white hover:bg-white/90 text-black rounded-full px-6 h-9 font-semibold transition-transform hover:scale-105" asChild>
-              <Link to="/login">Sign In</Link>
-            </Button>
+            {user ? (
+              <Button size="sm" className="bg-white hover:bg-white/90 text-black rounded-full px-6 h-9 font-semibold transition-transform hover:scale-105" asChild>
+                <Link to="/dashboard">Dashboard</Link>
+              </Button>
+            ) : (
+              <Button size="sm" className="bg-white hover:bg-white/90 text-black rounded-full px-6 h-9 font-semibold transition-transform hover:scale-105" asChild>
+                <Link to="/login">Sign In</Link>
+              </Button>
+            )}
           </div>
         </div>
       </nav>
@@ -52,12 +61,21 @@ export default function LandingPage() {
 
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
-            <Button size="lg" className="h-16 px-10 text-xl bg-white text-black hover:bg-white/90 w-full sm:w-auto font-semibold rounded-[2rem] shadow-2xl transition-transform hover:scale-105 flex items-center justify-center" asChild>
-              <Link to="/login">
-                Start Protecting
-                <ArrowRight className="h-6 w-6 ml-3" />
-              </Link>
-            </Button>
+            {user ? (
+              <Button size="lg" className="h-16 px-10 text-xl bg-white text-black hover:bg-white/90 w-full sm:w-auto font-semibold rounded-[2rem] shadow-2xl transition-transform hover:scale-105 flex items-center justify-center" asChild>
+                <Link to="/dashboard">
+                  Go to Dashboard
+                  <ArrowRight className="h-6 w-6 ml-3" />
+                </Link>
+              </Button>
+            ) : (
+              <Button size="lg" className="h-16 px-10 text-xl bg-white text-black hover:bg-white/90 w-full sm:w-auto font-semibold rounded-[2rem] shadow-2xl transition-transform hover:scale-105 flex items-center justify-center" asChild>
+                <Link to="/login">
+                  Start Protecting
+                  <ArrowRight className="h-6 w-6 ml-3" />
+                </Link>
+              </Button>
+            )}
             <Button size="lg" variant="outline" className="h-16 px-10 text-xl w-full sm:w-auto border-white/10 text-white hover:bg-white/10 bg-white/[0.02] rounded-[2rem] backdrop-blur-md transition-colors flex items-center justify-center" asChild>
               <Link to="/verify">
                 <Search className="h-5 w-5 mr-3 text-white/50" />
@@ -193,12 +211,21 @@ export default function LandingPage() {
           <p className="text-2xl text-white/50 mb-16 font-medium tracking-tight max-w-2xl mx-auto leading-relaxed">
             Full legal proof on every stamp. Set up your identity in 30 seconds.
           </p>
-          <Button size="lg" className="h-16 px-12 text-xl bg-white text-black hover:bg-white/90 font-semibold rounded-full shadow-2xl transition-transform hover:scale-105 flex items-center justify-center mx-auto" asChild>
-            <Link to="/login">
-              Start Stamping Now
-              <ChevronRight className="h-6 w-6 ml-2" />
-            </Link>
-          </Button>
+          {user ? (
+            <Button size="lg" className="h-16 px-12 text-xl bg-white text-black hover:bg-white/90 font-semibold rounded-full shadow-2xl transition-transform hover:scale-105 flex items-center justify-center mx-auto" asChild>
+              <Link to="/dashboard">
+                Go to Dashboard
+                <ChevronRight className="h-6 w-6 ml-2" />
+              </Link>
+            </Button>
+          ) : (
+            <Button size="lg" className="h-16 px-12 text-xl bg-white text-black hover:bg-white/90 font-semibold rounded-full shadow-2xl transition-transform hover:scale-105 flex items-center justify-center mx-auto" asChild>
+              <Link to="/login">
+                Start Stamping Now
+                <ChevronRight className="h-6 w-6 ml-2" />
+              </Link>
+            </Button>
+          )}
         </div>
       </section>
 
@@ -215,7 +242,11 @@ export default function LandingPage() {
             <Link to="/verify" className="hover:text-white transition-colors">Verify</Link>
             <Link to="/legal-guide" className="hover:text-white transition-colors">Legal</Link>
             <Link to="/register-copyright" className="hover:text-white transition-colors">Copyright</Link>
-            <Link to="/login" className="hover:text-white transition-colors">Sign In</Link>
+            {user ? (
+              <Link to="/dashboard" className="hover:text-white transition-colors">Dashboard</Link>
+            ) : (
+              <Link to="/login" className="hover:text-white transition-colors">Sign In</Link>
+            )}
           </div>
         </div>
       </footer>
