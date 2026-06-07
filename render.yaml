@@ -1,0 +1,35 @@
+databases:
+  - name: proofstamp-db
+    databaseName: proofstamp
+    user: postgres
+
+services:
+  # Python Stego Service (Requires Docker to install system dependencies like libgl)
+  - type: web
+    name: proofstamp-stego
+    env: docker
+    dockerContext: .
+    dockerfilePath: ./stego-service/Dockerfile
+    envVars:
+      - key: PORT
+        value: "8000"
+
+  # Node.js Backend API
+  - type: web
+    name: proofstamp-server
+    env: node
+    rootDir: server
+    buildCommand: npm install && npm run prisma:generate
+    startCommand: npm start
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: proofstamp-db
+          property: connectionString
+      - key: STEGO_SERVICE_URL
+        value: ${proofstamp-stego.onrender.com} # Render will use internal routing or you can replace with the actual URL later
+      - key: PORT
+        value: "3001"
+      - key: CLIENT_URL
+        value: "https://your-vercel-domain.vercel.app" # UPDATE THIS in the Render Dashboard later
+      # IMPORTANT: Add the rest of your .env variables (Google OAuth, JWT, Cloudinary) manually in the Render Dashboard

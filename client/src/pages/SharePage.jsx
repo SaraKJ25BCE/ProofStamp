@@ -235,9 +235,9 @@ export default function SharePage() {
               </div>
               <div className="flex flex-wrap gap-3 mt-4">
                 <Button variant="outline" className="bg-white/5 text-indigo-200 border-indigo-500/30 hover:bg-white/10 rounded-full font-medium" asChild>
-                  <a href={`${apiUrl}/legal/${stamp.id}/artifacts`} target="_blank" rel="noreferrer">
+                  <Link to={`/legal/${stamp.id}/artifacts`} target="_blank" className="hover:text-white transition-colors">
                     Evidence catalog
-                  </a>
+                  </Link>
                 </Button>
                 <Button variant="outline" className="bg-white/5 text-white border-white/10 hover:bg-white/10 rounded-full font-medium" asChild>
                   <Link to={`/verify?id=${stamp.id}`}>Verify this work</Link>
@@ -292,7 +292,7 @@ export default function SharePage() {
               <Button
                 variant="outline"
                 className="bg-white/5 border-white/10 text-white hover:bg-white/10 rounded-full font-medium px-6"
-                onClick={() => window.open(`${apiUrl}/stamps/${stamp.id}/proof`, '_blank')}
+                onClick={() => window.open(`/stamps/${stamp.id}/proof`, '_blank')}
               >
                 Proof Bundle (JSON)
               </Button>
@@ -367,7 +367,7 @@ export default function SharePage() {
                   ))}
                 </div>
                 <Button variant="outline" className="mt-6 bg-white/5 text-white border-white/10 hover:bg-white/10 rounded-full font-medium" onClick={() => {
-                  window.open(`${import.meta.env.VITE_API_URL}/versions/${stamp.id}/proof`, '_blank');
+                  window.open(`/stamps/${stamp.id}/proof`, '_blank');
                 }}>
                   <ExternalLink className="h-4 w-4 mr-2 text-white/50" /> Export Creation Proof (JSON)
                 </Button>

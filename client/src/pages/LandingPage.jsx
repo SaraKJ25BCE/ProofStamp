@@ -24,6 +24,7 @@ export default function LandingPage() {
           </div>
           <div className="flex items-center gap-4 text-sm font-medium">
             <Link to="/verify" className="text-white/50 hover:text-white transition-colors hidden sm:block">Verify</Link>
+            <Link to="/legal-guide" className="text-white/50 hover:text-white transition-colors hidden sm:block">Legal Guide</Link>
             {user ? (
               <Button size="sm" className="bg-white hover:bg-white/90 text-black rounded-full px-6 h-9 font-semibold transition-transform hover:scale-105" asChild>
                 <Link to="/dashboard">Dashboard</Link>
@@ -38,13 +39,13 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative pt-48 pb-32 lg:pt-64 lg:pb-48 overflow-hidden flex flex-col items-center justify-center min-h-[95vh] text-center z-10 px-6 animate-fade-up">
-        <div className="max-w-6xl mx-auto w-full">
+      <section className="relative pt-32 pb-32 lg:pt-40 lg:pb-48 overflow-hidden flex flex-col items-center justify-center min-h-[85vh] text-center z-10 px-6 animate-fade-up">
+        <div className="max-w-6xl mx-auto w-full relative z-10">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold mb-10 border border-white/10 bg-white/5 text-white/80 backdrop-blur-md shadow-2xl shadow-white/5">
-            <Scale className="h-4 w-4" />
+          <Link to="/legal-guide" className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold mb-10 border border-white/10 bg-white/5 text-white/80 backdrop-blur-md shadow-2xl shadow-white/5 hover:bg-white/10 hover:text-white transition-colors cursor-pointer group">
+            <Scale className="h-4 w-4 group-hover:scale-110 transition-transform" />
             {MARKETING.heroBadge}
-          </div>
+          </Link>
 
           {/* Headline */}
           <h1 className="text-6xl sm:text-8xl lg:text-[10rem] font-semibold tracking-tighter text-white mb-8 leading-[0.9] drop-shadow-2xl">
@@ -55,8 +56,8 @@ export default function LandingPage() {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-xl sm:text-3xl text-white/50 max-w-3xl mx-auto leading-snug mb-14 font-medium tracking-tight">
-            If you didn't stamp it, you can't prove you made it. Secure your intellectual property with cryptographically binding, zero-knowledge proofs.
+          <p className="text-xl sm:text-3xl text-white/50 max-w-4xl mx-auto leading-snug mb-14 font-medium tracking-tight">
+            The world's first forensic platform built on C2PA provenance standards and Indian evidentiary law. Instantly generate court-admissible, zero-knowledge ownership evidence for your digital files in seconds.
           </p>
 
           {/* CTAs */}
@@ -76,12 +77,7 @@ export default function LandingPage() {
                 </Link>
               </Button>
             )}
-            <Button size="lg" variant="outline" className="h-16 px-10 text-xl w-full sm:w-auto border-white/10 text-white hover:bg-white/10 bg-white/[0.02] rounded-[2rem] backdrop-blur-md transition-colors flex items-center justify-center" asChild>
-              <Link to="/verify">
-                <Search className="h-5 w-5 mr-3 text-white/50" />
-                Verify Identity
-              </Link>
-            </Button>
+
           </div>
         </div>
       </section>
@@ -240,8 +236,7 @@ export default function LandingPage() {
           </div>
           <div className="flex flex-wrap justify-center gap-10 text-base font-medium text-white/40">
             <Link to="/verify" className="hover:text-white transition-colors">Verify</Link>
-            <Link to="/legal-guide" className="hover:text-white transition-colors">Legal</Link>
-            <Link to="/register-copyright" className="hover:text-white transition-colors">Copyright</Link>
+            <Link to="/legal-guide" className="hover:text-white transition-colors">Legal Guide</Link>
             {user ? (
               <Link to="/dashboard" className="hover:text-white transition-colors">Dashboard</Link>
             ) : (

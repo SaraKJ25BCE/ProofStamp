@@ -471,8 +471,10 @@ export default function StampPage() {
                   <Download className="h-4 w-4 mr-2" /> System cert
                 </Button>
               )}
-              <Button variant="outline" className="rounded-xl border-white/10 bg-white/5 text-white hover:bg-white/10 hover:text-white h-11" onClick={() => window.open(`${import.meta.env.VITE_API_URL}/stamps/${result.stamp.id}/proof`, '_blank')}>
-                Proof Bundle (JSON)
+              <Button variant="outline" className="rounded-xl border-white/10 bg-white/5 text-white hover:bg-white/10 hover:text-white h-11" asChild>
+                <Link to={`/stamps/${result.stamp.id}/proof`} target="_blank">
+                  Proof Bundle (JSON)
+                </Link>
               </Button>
               <Button variant="outline" className="rounded-xl border-white/10 bg-white/5 text-white hover:bg-white/10 hover:text-white h-11" asChild>
                 <Link to="/legal-guide">What this proves</Link>

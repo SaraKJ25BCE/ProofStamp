@@ -36,6 +36,7 @@ export default function TakedownPage() {
   const [formUrl, setFormUrl] = useState(searchParams.get('url') || '');
   const [formPlatform, setFormPlatform] = useState('');
   const [formAlertId] = useState(searchParams.get('alertId') || '');
+  const [formType, setFormType] = useState('copyright');
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -71,6 +72,7 @@ export default function TakedownPage() {
         infringingUrl: formUrl,
         platform: formPlatform,
         alertId: formAlertId || undefined,
+        type: formType,
       });
       setTakedowns(prev => [res.data.takedown, ...prev]);
       setExpanded(res.data.takedown.id);
@@ -94,6 +96,20 @@ export default function TakedownPage() {
     }
   }
 
+  const handleDispatch = (td) => {
+    updateStatus(td.id, 'sent');
+    
+    const subjectTitle = td.stamp?.title || 'Takedown Request';
+    const isDeepfake = td.dmcaLetter?.includes('DEEPFAKE') || td.dmcaLetter?.includes('Rule 3(2)(b)');
+    const subjectPrefix = isDeepfake 
+      ? 'URGENT: STATUTORY GRIEVANCE NOTICE — DEEPFAKE' 
+      : 'DMCA & IT RULES 2021 TAKEDOWN NOTICE';
+    const subject = `${subjectPrefix} - ${subjectTitle}`;
+    
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(td.dmcaLetter || '')}`;
+    window.open(gmailUrl, '_blank');
+  };
+
   function copyText(text, id) {
     navigator.clipboard.writeText(text);
     setCopied(id);
@@ -115,8 +131,24 @@ export default function TakedownPage() {
   if (loading) {
     return (
       <Layout>
-        <div className="flex items-center justify-center py-20">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <div className="max-w-4xl mx-auto space-y-8 animate-fade-up w-full">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+            <div className="space-y-3">
+              <div className="h-10 w-64 bg-white/10 rounded-xl animate-pulse" />
+              <div className="h-6 w-96 bg-white/5 rounded-xl animate-pulse" />
+            </div>
+            <div className="h-12 w-40 bg-white/10 rounded-full animate-pulse" />
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[1, 2, 3, 4].map(i => (
+              <div key={i} className="apple-glass-panel p-6 rounded-[2rem] border border-white/5 h-32 animate-pulse bg-white/5" />
+            ))}
+          </div>
+          <div className="space-y-4">
+            {[1, 2, 3].map(i => (
+              <div key={i} className="apple-glass rounded-[2rem] border border-white/5 h-24 animate-pulse bg-white/5" />
+            ))}
+          </div>
         </div>
       </Layout>
     );
@@ -167,8 +199,23 @@ export default function TakedownPage() {
         {showForm && (
           <div className="apple-glass-panel border border-red-500/20 bg-red-500/5 rounded-[2.5rem] overflow-hidden apple-shadow mb-8">
             <div className="p-8 sm:p-10">
-              <h2 className="text-2xl font-semibold text-white tracking-tight mb-8">File a DMCA Takedown</h2>
+              <h2 className="text-2xl font-semibold text-white tracking-tight mb-8">File a Statutory IT Rules Notice</h2>
               <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="md:col-span-2">
+                    <label className="text-sm font-medium mb-2 block text-white/70">Infringement Type</label>
+                    <div className="flex gap-4">
+                      <label className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-xl border cursor-pointer transition-all ${formType === 'copyright' ? 'bg-indigo-500/20 border-indigo-500/40 text-indigo-300' : 'bg-black/50 border-white/10 text-white/50 hover:bg-white/5'}`}>
+                        <input type="radio" className="hidden" name="type" value="copyright" checked={formType === 'copyright'} onChange={() => setFormType('copyright')} />
+                        <FileWarning className="h-4 w-4" /> Copyright Violation
+                      </label>
+                      <label className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-xl border cursor-pointer transition-all ${formType === 'deepfake' ? 'bg-red-500/20 border-red-500/40 text-red-300' : 'bg-black/50 border-white/10 text-white/50 hover:bg-white/5'}`}>
+                        <input type="radio" className="hidden" name="type" value="deepfake" checked={formType === 'deepfake'} onChange={() => setFormType('deepfake')} />
+                        <FileWarning className="h-4 w-4" /> Deepfake / Impersonation
+                      </label>
+                    </div>
+                  </div>
+                </div>
                 <div>
                   <label className="text-sm font-medium mb-2 block text-white/70">Your Stamp (the original work)</label>
                   <select
@@ -212,7 +259,7 @@ export default function TakedownPage() {
                 </div>
                 <Button type="submit" disabled={submitting} className="w-full h-12 rounded-xl bg-red-600 hover:bg-red-700 text-white font-semibold text-lg shadow-xl">
                   {submitting ? <Loader2 className="h-5 w-5 mr-2 animate-spin" /> : <FileWarning className="h-5 w-5 mr-2" />}
-                  Generate DMCA Takedown Notice
+                  Generate Statutory Legal Notice
                 </Button>
               </form>
             </div>
@@ -254,6 +301,11 @@ export default function TakedownPage() {
                           <div className={`px-2.5 py-1 rounded-md text-[10px] font-bold tracking-widest uppercase border ${statusConf?.color}`}>
                             {statusConf?.label}
                           </div>
+                          {td.dmcaLetter?.includes('DEEPFAKE') && (
+                            <div className="px-2.5 py-1 rounded-md text-[10px] font-bold tracking-widest uppercase border bg-red-500/20 text-red-300 border-red-500/30">
+                              DEEPFAKE (24HR MANDATE)
+                            </div>
+                          )}
                         </div>
                         <p className="text-sm text-blue-400 hover:text-blue-300 truncate font-medium max-w-lg mb-1">{td.infringingUrl}</p>
                         <p className="text-xs font-medium text-white/30">
@@ -263,75 +315,92 @@ export default function TakedownPage() {
                       {isExpanded ? <ChevronUp className="h-6 w-6 text-white/30" /> : <ChevronDown className="h-6 w-6 text-white/30" />}
                     </div>
 
-                    {isExpanded && (
-                      <div className="mt-6 pt-6 border-t border-white/10 space-y-6">
-                        {/* DMCA Letter */}
-                        <div>
-                          <div className="flex items-center justify-between mb-3">
-                            <p className="text-sm font-semibold text-white">DMCA Notice (ready to send)</p>
-                            <Button
-                              size="sm" variant="ghost"
-                              className="text-white/50 hover:text-white hover:bg-white/10 rounded-full font-medium h-8"
-                              onClick={() => copyText(td.dmcaLetter, td.id)}
-                            >
-                              {copied === td.id ? <CheckCircle2 className="h-4 w-4 text-green-400" /> : <Copy className="h-4 w-4" />}
-                              <span className="ml-1.5">{copied === td.id ? 'Copied!' : 'Copy'}</span>
-                            </Button>
-                          </div>
-                          <pre className="text-xs bg-black/50 border border-white/10 text-white/80 p-5 rounded-[1.5rem] overflow-x-auto whitespace-pre-wrap max-h-60 overflow-y-auto font-mono leading-relaxed">
-                            {td.dmcaLetter}
-                          </pre>
-                        </div>
-
-                        {/* Platform link */}
-                        {platforms[td.platform]?.reportUrl && (
-                          <div className="flex items-center gap-4 p-5 bg-blue-500/10 rounded-[1.5rem] border border-blue-500/20">
-                            <div className="flex-1">
-                              <p className="text-sm font-semibold text-blue-300">
-                                File on {platforms[td.platform]?.name}
-                              </p>
-                              <p className="text-xs font-medium text-blue-400/80 mt-1">
-                                Method: {platforms[td.platform]?.method}
-                              </p>
+                    <div className={`grid transition-all duration-300 ease-in-out ${isExpanded ? 'grid-rows-[1fr] opacity-100 mt-6 pt-6 border-t border-white/10' : 'grid-rows-[0fr] opacity-0 mt-0 pt-0 border-transparent'}`}>
+                      <div className="overflow-hidden">
+                        <div className="space-y-6 pb-2">
+                          {/* DMCA Letter */}
+                          <div>
+                            <div className="flex items-center justify-between mb-3">
+                              <p className="text-sm font-semibold text-white">DMCA Notice (ready to send)</p>
+                              <Button
+                                size="sm" variant="ghost"
+                                className="text-white/50 hover:text-white hover:bg-white/10 rounded-full font-medium h-8"
+                                onClick={() => copyText(td.dmcaLetter, td.id)}
+                              >
+                                {copied === td.id ? <CheckCircle2 className="h-4 w-4 text-green-400" /> : <Copy className="h-4 w-4" />}
+                                <span className="ml-1.5">{copied === td.id ? 'Copied!' : 'Copy'}</span>
+                              </Button>
                             </div>
-                            <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white rounded-full font-medium shadow-lg" asChild>
-                              <a href={platforms[td.platform].reportUrl} target="_blank" rel="noreferrer">
-                                <ExternalLink className="h-4 w-4 mr-1.5" /> Open Form
-                              </a>
-                            </Button>
+                            <pre className="text-xs bg-black/50 border border-white/10 text-white/80 p-5 rounded-[1.5rem] overflow-x-auto whitespace-pre-wrap max-h-60 overflow-y-auto font-mono leading-relaxed">
+                              {td.dmcaLetter}
+                            </pre>
                           </div>
-                        )}
 
-                        {/* Status actions */}
-                        <div className="flex gap-3 flex-wrap">
-                          {td.status === 'draft' && (
-                            <Button size="sm" className="bg-white text-black hover:bg-white/90 rounded-full font-semibold shadow-lg" onClick={() => updateStatus(td.id, 'sent')}>
-                              <Send className="h-4 w-4 mr-1.5" /> Mark as Sent
-                            </Button>
+                          {/* Platform link */}
+                          {platforms[td.platform] && (
+                            <div className="flex items-center gap-4 p-5 bg-blue-500/10 rounded-[1.5rem] border border-blue-500/20">
+                              <div className="flex-1">
+                                <p className="text-sm font-semibold text-blue-300">
+                                  Resident Grievance Officer ({platforms[td.platform]?.name})
+                                </p>
+                                <p className="text-xs font-medium text-blue-400/80 mt-1">
+                                  Method: Email Dispatch / Form
+                                </p>
+                              </div>
+                              {platforms[td.platform]?.reportUrl && (
+                                <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white rounded-full font-medium shadow-lg" asChild>
+                                  <a href={platforms[td.platform].reportUrl} target="_blank" rel="noreferrer">
+                                    <ExternalLink className="h-4 w-4 mr-1.5" /> Open Platform Form
+                                  </a>
+                                </Button>
+                              )}
+                            </div>
                           )}
-                          {td.status === 'sent' && (
-                            <>
-                              <Button size="sm" variant="outline" className="bg-white/5 text-white border-white/10 hover:bg-white/10 rounded-full font-medium" onClick={() => updateStatus(td.id, 'acknowledged')}>
-                                Platform Acknowledged
-                              </Button>
-                              <Button size="sm" variant="default" className="bg-green-600 hover:bg-green-700 text-white rounded-full font-medium shadow-lg" onClick={() => updateStatus(td.id, 'resolved')}>
-                                <CheckCircle2 className="h-4 w-4 mr-1.5" /> Content Removed
-                              </Button>
-                            </>
+
+                          {/* Countdown Timer for active deepfakes */}
+                          {td.status === 'sent' && td.responseDeadline && (
+                            <div className="flex items-center gap-4 p-5 bg-amber-500/10 rounded-[1.5rem] border border-amber-500/20">
+                              <Clock className="h-6 w-6 text-amber-400" />
+                              <div>
+                                <p className="text-sm font-semibold text-amber-300">Statutory Deadline</p>
+                                <p className="text-xs font-medium text-amber-200 mt-0.5">
+                                  The platform is legally mandated to resolve this by {new Date(td.responseDeadline).toLocaleString()}
+                                </p>
+                              </div>
+                            </div>
                           )}
-                          {td.status === 'acknowledged' && (
-                            <>
-                              <Button size="sm" variant="default" className="bg-green-600 hover:bg-green-700 text-white rounded-full font-medium shadow-lg" onClick={() => updateStatus(td.id, 'resolved')}>
-                                <CheckCircle2 className="h-4 w-4 mr-1.5" /> Content Removed
+
+                          {/* Status actions */}
+                          <div className="flex gap-3 flex-wrap">
+                            {td.status === 'draft' && (
+                              <Button size="sm" className="bg-red-600 hover:bg-red-700 text-white rounded-full font-semibold shadow-lg" onClick={() => handleDispatch(td)}>
+                                <Send className="h-4 w-4 mr-1.5" /> Dispatch to Grievance Officer
                               </Button>
-                              <Button size="sm" variant="destructive" className="rounded-full font-medium shadow-lg" onClick={() => updateStatus(td.id, 'rejected')}>
-                                <XCircle className="h-4 w-4 mr-1.5" /> Rejected
-                              </Button>
-                            </>
-                          )}
+                            )}
+                            {td.status === 'sent' && (
+                              <>
+                                <Button size="sm" variant="outline" className="bg-white/5 text-white border-white/10 hover:bg-white/10 rounded-full font-medium" onClick={() => updateStatus(td.id, 'acknowledged')}>
+                                  Platform Acknowledged
+                                </Button>
+                                <Button size="sm" variant="default" className="bg-green-600 hover:bg-green-700 text-white rounded-full font-medium shadow-lg" onClick={() => updateStatus(td.id, 'resolved')}>
+                                  <CheckCircle2 className="h-4 w-4 mr-1.5" /> Content Removed
+                                </Button>
+                              </>
+                            )}
+                            {td.status === 'acknowledged' && (
+                              <>
+                                <Button size="sm" variant="default" className="bg-green-600 hover:bg-green-700 text-white rounded-full font-medium shadow-lg" onClick={() => updateStatus(td.id, 'resolved')}>
+                                  <CheckCircle2 className="h-4 w-4 mr-1.5" /> Content Removed
+                                </Button>
+                                <Button size="sm" variant="destructive" className="rounded-full font-medium shadow-lg" onClick={() => updateStatus(td.id, 'rejected')}>
+                                  <XCircle className="h-4 w-4 mr-1.5" /> Rejected
+                                </Button>
+                              </>
+                            )}
+                          </div>
                         </div>
                       </div>
-                    )}
+                    </div>
                   </div>
                 </div>
               );

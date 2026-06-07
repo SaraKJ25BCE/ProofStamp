@@ -387,7 +387,7 @@ function VerificationResult({ result, onReset }) {
               </Button>
             )}
             <Button variant="outline" className="bg-white/5 text-white border-white/10 hover:bg-white/10 hover:text-white rounded-full font-medium" onClick={() => {
-              window.open(`${import.meta.env.VITE_API_URL}/stamps/${stamp.id}/proof`, '_blank');
+              window.open(`/stamps/${stamp.id}/proof`, '_blank');
             }}>
               <Shield className="h-4 w-4 mr-2 text-white/50" /> Proof Bundle
             </Button>

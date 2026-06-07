@@ -1,0 +1,11 @@
+node_modules
+client/node_modules
+server/node_modules
+stego-service/venv
+stego-service/__pycache__
+.git
+.env
+client/dist
+.DS_Store
+pramp-idea.pptx
+ProofStamp_Process_Flows.docx

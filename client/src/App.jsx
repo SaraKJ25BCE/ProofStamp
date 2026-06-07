@@ -16,9 +16,10 @@ import RegistryPage from '@/pages/RegistryPage';
 import TermsPage from '@/pages/TermsPage';
 import PrivacyPage from '@/pages/PrivacyPage';
 import LegalGuidePage from '@/pages/LegalGuidePage';
-import RegisterCopyrightPage from '@/pages/RegisterCopyrightPage';
 import NotificationsPage from '@/pages/NotificationsPage';
 import SettingsPage from '@/pages/SettingsPage';
+import ArtifactsPage from '@/pages/ArtifactsPage';
+import ProofPage from '@/pages/ProofPage';
 import { Loader2 } from 'lucide-react';
 import { ToastProvider } from '@/components/ui/toast'; 
  
@@ -64,8 +65,9 @@ function AppRoutes() {
       <Route path="/terms" element={<TermsPage />} />
       <Route path="/privacy" element={<PrivacyPage />} />
       <Route path="/legal-guide" element={<LegalGuidePage />} />
-      <Route path="/register-copyright" element={<RegisterCopyrightPage />} />
       <Route path="/p/:stampId" element={<SharePage />} />
+      <Route path="/legal/:stampId/artifacts" element={<ArtifactsPage />} />
+      <Route path="/stamps/:stampId/proof" element={<ProofPage />} />
       <Route path="/u/:username" element={<PublicPassport />} />
       <Route path="/" element={<LandingPage />} />
     </Routes>

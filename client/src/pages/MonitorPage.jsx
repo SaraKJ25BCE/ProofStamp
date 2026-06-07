@@ -88,8 +88,26 @@ export default function MonitorPage() {
   if (loading) {
     return (
       <Layout>
-        <div className="flex items-center justify-center py-20">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <div className="max-w-5xl mx-auto space-y-8 animate-fade-up w-full">
+          <div className="flex flex-col gap-4">
+            <div className="h-10 w-64 bg-white/10 rounded-xl animate-pulse" />
+            <div className="h-6 w-96 bg-white/5 rounded-xl animate-pulse" />
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[1, 2, 3, 4].map(i => (
+              <div key={i} className="apple-glass-panel p-6 rounded-[2rem] border border-white/5 h-32 animate-pulse bg-white/5" />
+            ))}
+          </div>
+          <div className="flex gap-2 border-b border-white/10 pb-4">
+             <div className="h-10 w-32 bg-white/10 rounded-full animate-pulse" />
+             <div className="h-10 w-32 bg-white/5 rounded-full animate-pulse" />
+             <div className="h-10 w-32 bg-white/5 rounded-full animate-pulse" />
+          </div>
+          <div className="space-y-4">
+            {[1, 2, 3].map(i => (
+              <div key={i} className="apple-glass rounded-[2rem] border border-white/5 h-32 animate-pulse bg-white/5" />
+            ))}
+          </div>
         </div>
       </Layout>
     );
@@ -171,7 +189,7 @@ export default function MonitorPage() {
 
         {/* Active Monitors */}
         {tab === 'overview' && (
-          <div className="space-y-4">
+          <div className="space-y-4 animate-fade-up">
             {monitors.length === 0 ? (
               <div className="apple-glass-panel rounded-[3rem] p-16 text-center border border-white/10 apple-shadow">
                 <Radar className="h-16 w-16 text-white/20 mx-auto mb-6" />
@@ -241,7 +259,7 @@ export default function MonitorPage() {
 
         {/* Alerts */}
         {tab === 'alerts' && (
-          <div className="space-y-4">
+          <div className="space-y-4 animate-fade-up">
             {alerts.length === 0 ? (
               <div className="apple-glass-panel rounded-[3rem] p-16 text-center border border-white/10 apple-shadow">
                 <Bell className="h-16 w-16 text-white/20 mx-auto mb-6" />
@@ -308,7 +326,7 @@ export default function MonitorPage() {
 
         {/* Add Images to Monitor */}
         {tab === 'add' && (
-          <div className="space-y-4">
+          <div className="space-y-4 animate-fade-up">
             {unmonitoredStamps.length === 0 ? (
               <div className="apple-glass-panel rounded-[3rem] p-16 text-center border border-white/10 apple-shadow">
                 <CheckCircle2 className="h-16 w-16 text-green-400 mx-auto mb-6" />

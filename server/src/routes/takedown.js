@@ -153,11 +153,19 @@ router.post('/', authMiddleware, async (req, res) => {
     const platformConfig = getPlatformConfig(platform);
     const dmcaLetter = generateLegalNotice(stamp, passport, infringingUrl, platformConfig.name, type);
 
+    let finalAlertId = alertId || null;
+    if (finalAlertId) {
+      const existing = await prisma.takedown.findFirst({ where: { alertId: finalAlertId } });
+      if (existing) {
+        finalAlertId = null;
+      }
+    }
+
     const takedown = await prisma.takedown.create({
       data: {
         passportId: passport.id,
         stampId,
-        alertId: alertId || null,
+        alertId: finalAlertId,
         platform,
         infringingUrl,
         status: 'draft',
