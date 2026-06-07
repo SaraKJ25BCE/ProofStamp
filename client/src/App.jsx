@@ -20,7 +20,7 @@ import NotificationsPage from '@/pages/NotificationsPage';
 import SettingsPage from '@/pages/SettingsPage';
 import { Loader2 } from 'lucide-react';
 import { ToastProvider } from '@/components/ui/toast'; 
-
+ 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
 
