@@ -79,7 +79,25 @@ export default function App() {
   useEffect(() => {
     const disableBFCache = () => {};
     window.addEventListener('unload', disableBFCache);
-    return () => window.removeEventListener('unload', disableBFCache);
+
+    // Silent Wakeup & Client-Side Keep-Alive for Python Stego Service
+    const pingStego = () => {
+      const isProd = window.location.hostname !== 'localhost';
+      const stegoUrl = isProd ? 'https://proofstamp-stego.onrender.com' : 'http://localhost:8000';
+      // Fire-and-forget network request to keep the service awake (no-cors prevents browser console errors)
+      fetch(`${stegoUrl}/health`, { mode: 'no-cors' }).catch(() => {});
+    };
+
+    // Ping immediately when the user opens the app
+    pingStego();
+
+    // Ping every 10 minutes while the user has the tab open
+    const intervalId = setInterval(pingStego, 10 * 60 * 1000);
+
+    return () => {
+      window.removeEventListener('unload', disableBFCache);
+      clearInterval(intervalId);
+    };
   }, []);
 
   return (
