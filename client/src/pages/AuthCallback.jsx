@@ -9,11 +9,12 @@ export default function AuthCallback() {
   const { login } = useAuth();
 
   useEffect(() => {
-    login();
-    const needsSetup = searchParams.get('needsSetup') === '1';
-    setTimeout(() => {
+    async function handleAuth() {
+      await login();
+      const needsSetup = searchParams.get('needsSetup') === '1';
       navigate(needsSetup ? '/setup' : '/dashboard');
-    }, 500);
+    }
+    handleAuth();
   }, [searchParams, login, navigate]);
 
   return (

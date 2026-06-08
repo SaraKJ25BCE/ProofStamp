@@ -49,7 +49,7 @@ const {
 
 const app = express();
 
-if (process.env.TRUST_PROXY === 'true') {
+if (process.env.NODE_ENV === 'production' || process.env.TRUST_PROXY === 'true') {
   app.set('trust proxy', 1);
 }
 
@@ -59,7 +59,17 @@ app.use(
     frameguard: false,
   }),
 );
-app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
+const allowedOrigins = [process.env.CLIENT_URL];
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+      return callback(null, true);
+    }
+    return callback(null, false);
+  },
+  credentials: true
+}));
 app.use(cookieParser());
 app.use(morgan('dev'));
 app.use(express.json());

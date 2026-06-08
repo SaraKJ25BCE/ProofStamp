@@ -34,8 +34,8 @@ export function AuthProvider({ children }) {
     }
   }
 
-  function login() {
-    fetchUser();
+  async function login() {
+    await fetchUser();
   }
 
   async function logout() {

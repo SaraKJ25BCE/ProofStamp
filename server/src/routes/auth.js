@@ -8,6 +8,7 @@ const { sanitizePassport } = require('../utils/sanitizePassport');
 const emailAuthRoutes = require('./emailAuth');
 
 const router = express.Router();
+const isProd = process.env.NODE_ENV === 'production' || process.env.RENDER === 'true' || (process.env.CLIENT_URL && !process.env.CLIENT_URL.includes('localhost'));
 
 router.use('/email', emailAuthRoutes);
 
@@ -26,8 +27,8 @@ router.get(
     const needsSetup = user.passport?.username ? '0' : '1';
     res.cookie('proofstamp_token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      secure: isProd,
+      sameSite: isProd ? 'none' : 'lax',
       maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
     });
     res.redirect(`${process.env.CLIENT_URL}/auth/callback?needsSetup=${needsSetup}`);
@@ -37,8 +38,8 @@ router.get(
 router.post('/logout', (req, res) => {
   res.clearCookie('proofstamp_token', {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    secure: isProd,
+    sameSite: isProd ? 'none' : 'lax',
   });
   res.json({ message: 'Logged out' });
 });

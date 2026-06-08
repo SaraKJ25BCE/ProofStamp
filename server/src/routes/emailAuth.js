@@ -7,6 +7,7 @@ const { issueAuthToken, issueSetupToken, verifySetupToken } = require('../utils/
 const { emailSendCodeLimiter, emailVerifyCodeLimiter } = require('../middleware/rateLimiter');
 
 const router = express.Router();
+const isProd = process.env.NODE_ENV === 'production' || process.env.RENDER === 'true' || (process.env.CLIENT_URL && !process.env.CLIENT_URL.includes('localhost'));
 
 const CODE_TTL_MS = 10 * 60 * 1000;
 const MAX_ATTEMPTS = 5;
@@ -129,8 +130,8 @@ router.post('/verify-code', emailVerifyCodeLimiter, async (req, res) => {
       const token = issueAuthToken(user);
       res.cookie('proofstamp_token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        secure: isProd,
+        sameSite: isProd ? 'none' : 'lax',
         maxAge: 30 * 24 * 60 * 60 * 1000
       });
       return res.json({
@@ -202,8 +203,8 @@ router.post('/complete-signup', async (req, res) => {
     const token = issueAuthToken(user);
     res.cookie('proofstamp_token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      secure: isProd,
+      sameSite: isProd ? 'none' : 'lax',
       maxAge: 30 * 24 * 60 * 60 * 1000
     });
     res.status(201).json({

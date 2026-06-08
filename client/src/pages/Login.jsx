@@ -38,8 +38,8 @@ export default function Login() {
     setMode(nextMode);
   }
 
-  function finishAuth(needsSetup) {
-    login();
+  async function finishAuth(needsSetup) {
+    await login();
     navigate(needsSetup ? '/setup' : '/dashboard');
   }
 
