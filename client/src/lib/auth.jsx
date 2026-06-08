@@ -23,12 +23,18 @@ export function AuthProvider({ children }) {
 
   async function fetchUser() {
     try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setLoading(false);
+        return;
+      }
       const res = await api.get('/auth/me');
       setUser(res.data.user);
       setPassport(res.data.passport);
     } catch {
       setUser(null);
       setPassport(null);
+      localStorage.removeItem('token');
     } finally {
       setLoading(false);
     }
@@ -44,6 +50,7 @@ export function AuthProvider({ children }) {
     } catch (error) {
       // ignore error on logout
     }
+    localStorage.removeItem('token');
     setUser(null);
     setPassport(null);
     window.location.replace('/login');

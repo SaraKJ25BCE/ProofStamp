@@ -128,16 +128,11 @@ router.post('/verify-code', emailVerifyCodeLimiter, async (req, res) => {
       });
 
       const token = issueAuthToken(user);
-      res.cookie('proofstamp_token', token, {
-        httpOnly: true,
-        secure: isProd,
-        sameSite: isProd ? 'none' : 'lax',
-        maxAge: 30 * 24 * 60 * 60 * 1000
-      });
       return res.json({
         verified: true,
         purpose: 'login',
         needsSetup: !user.passport?.username,
+        token,
         message: 'Signed in successfully',
       });
     }
@@ -201,14 +196,9 @@ router.post('/complete-signup', async (req, res) => {
     }
 
     const token = issueAuthToken(user);
-    res.cookie('proofstamp_token', token, {
-      httpOnly: true,
-      secure: isProd,
-      sameSite: isProd ? 'none' : 'lax',
-      maxAge: 30 * 24 * 60 * 60 * 1000
-    });
     res.status(201).json({
       needsSetup: !user.passport?.username,
+      token,
       message: 'Account created successfully',
     });
   } catch (error) {

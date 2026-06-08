@@ -68,6 +68,9 @@ export default function Login() {
       const res = await api.post('/auth/email/verify-code', { email, code, purpose });
 
       if (purpose === 'login') {
+        if (res.data.token) {
+          localStorage.setItem('token', res.data.token);
+        }
         finishAuth(res.data.needsSetup);
         return;
       }
@@ -92,6 +95,9 @@ export default function Login() {
         displayName,
         username: username || undefined,
       });
+      if (res.data.token) {
+        localStorage.setItem('token', res.data.token);
+      }
       finishAuth(res.data.needsSetup);
     } catch (err) {
       setError(err.response?.data?.error || 'Failed to create account');

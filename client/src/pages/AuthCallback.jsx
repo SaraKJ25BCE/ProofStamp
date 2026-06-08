@@ -10,6 +10,10 @@ export default function AuthCallback() {
 
   useEffect(() => {
     async function handleAuth() {
+      const token = searchParams.get('token');
+      if (token) {
+        localStorage.setItem('token', token);
+      }
       await login();
       const needsSetup = searchParams.get('needsSetup') === '1';
       navigate(needsSetup ? '/setup' : '/dashboard');
