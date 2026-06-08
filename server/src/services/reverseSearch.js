@@ -150,7 +150,7 @@ async function searchSerpApiLens(imageUrl) {
     const matches = [];
     const visualMatches = response.data?.visual_matches || [];
 
-    for (const match of visualMatches) {
+    for (const match of visualMatches.slice(0, 5)) {
       if (!match.link) continue;
       
       let domain = 'unknown';
