@@ -10,6 +10,33 @@ const { getMonitoringCapabilities } = require('../services/monitoringCapabilitie
 
 const router = express.Router();
 
+router.get('/wake-stego', authMiddleware, async (req, res) => {
+  try {
+    let stegoAwake = false;
+    for (let i = 0; i < 30; i++) { // Loop up to ~60s
+      try {
+        const response = await axios.get(`${process.env.STEGO_SERVICE_URL}/health`, { timeout: 3000 });
+        if (response.status === 200) {
+          stegoAwake = true;
+          break;
+        }
+      } catch (err) {
+        // Wait 2 seconds before retrying
+        await new Promise(r => setTimeout(r, 2000));
+      }
+    }
+
+    if (stegoAwake) {
+      return res.json({ awake: true });
+    } else {
+      return res.status(503).json({ error: 'Python stego service is unreachable. Please try again.' });
+    }
+  } catch (error) {
+    console.error('Wake stego error:', error);
+    res.status(500).json({ error: 'Failed to wake stego service' });
+  }
+});
+
 router.get('/capabilities', authMiddleware, (req, res) => {
   res.json(getMonitoringCapabilities());
 });
@@ -124,27 +151,27 @@ router.post('/scan/:stampId', authMiddleware, async (req, res) => {
         cnnSimilarity = cosineSimilarity(stamp.embedding, other.embedding);
       }
 
-      const isPhashMatch = dist < 25;
-      const isCnnMatch = cnnSimilarity !== null && cnnSimilarity > 0.70;
+      const isPhashMatch = dist <= 35;
+      const isCnnMatch = cnnSimilarity !== null && cnnSimilarity >= 0.60;
 
       if (isPhashMatch || isCnnMatch) {
         let confidence;
         let matchType = 'perceptual_hash';
 
-        if (cnnSimilarity !== null && cnnSimilarity > 0.85) {
+        if (cnnSimilarity !== null && cnnSimilarity >= 0.85) {
           confidence = Math.min(0.98, cnnSimilarity);
           matchType = 'cnn_embedding';
         } else if (dist <= 5) {
           confidence = 0.95;
-        } else if (cnnSimilarity !== null && cnnSimilarity > 0.70) {
+        } else if (cnnSimilarity !== null && cnnSimilarity >= 0.60) {
           confidence = cnnSimilarity * 0.9;
           matchType = 'cnn_embedding';
         } else if (dist <= 10) {
           confidence = 0.85;
-        } else if (dist <= 18) {
+        } else if (dist <= 25) {
           confidence = 0.7;
         } else {
-          confidence = 0.5;
+          confidence = 0.6;
         }
 
         matches.push({
@@ -330,18 +357,18 @@ router.patch('/alerts/:alertId', authMiddleware, async (req, res) => {
 async function verifyExternalMatch(match, stamp) {
   if (!match.thumbnailUrl) return null;
   try {
-    const imgRes = await axios.get(match.thumbnailUrl, { responseType: 'arraybuffer', timeout: 5000 });
+    const imgRes = await axios.get(match.thumbnailUrl, { responseType: 'arraybuffer', timeout: 10000 });
     const formData = new FormData();
     formData.append('file', imgRes.data, { filename: 'thumb.jpg', contentType: 'image/jpeg' });
     
-    const hashRes = await axios.post(`${process.env.STEGO_SERVICE_URL}/hash`, formData, { headers: formData.getHeaders(), timeout: 10000 });
+    const hashRes = await axios.post(`${process.env.STEGO_SERVICE_URL}/hash`, formData, { headers: formData.getHeaders(), timeout: 60000 });
     const matchPHash = hashRes.data.p_hash || hashRes.data.pHash;
     if (!matchPHash) return null;
 
     let matchEmbedding = null;
     if (stamp.embedding && stamp.embedding.length > 0) {
       try {
-        const embedRes = await axios.post(`${process.env.STEGO_SERVICE_URL}/embedding`, formData, { headers: formData.getHeaders(), timeout: 10000 });
+        const embedRes = await axios.post(`${process.env.STEGO_SERVICE_URL}/embedding`, formData, { headers: formData.getHeaders(), timeout: 60000 });
         matchEmbedding = embedRes.data.embedding;
       } catch (err) {}
     }
@@ -352,27 +379,27 @@ async function verifyExternalMatch(match, stamp) {
       cnnSimilarity = cosineSimilarity(stamp.embedding, matchEmbedding);
     }
 
-    const isPhashMatch = dist < 25;
-    const isCnnMatch = cnnSimilarity !== null && cnnSimilarity > 0.70;
+    const isPhashMatch = dist <= 35;
+    const isCnnMatch = cnnSimilarity !== null && cnnSimilarity >= 0.60;
 
     if (isPhashMatch || isCnnMatch) {
       let confidence;
       let matchType = 'perceptual_hash';
 
-      if (cnnSimilarity !== null && cnnSimilarity > 0.85) {
+      if (cnnSimilarity !== null && cnnSimilarity >= 0.85) {
         confidence = Math.min(0.98, cnnSimilarity);
         matchType = 'cnn_embedding';
       } else if (dist <= 5) {
         confidence = 0.95;
-      } else if (cnnSimilarity !== null && cnnSimilarity > 0.70) {
+      } else if (cnnSimilarity !== null && cnnSimilarity >= 0.60) {
         confidence = cnnSimilarity * 0.9;
         matchType = 'cnn_embedding';
       } else if (dist <= 10) {
         confidence = 0.85;
-      } else if (dist <= 18) {
+      } else if (dist <= 25) {
         confidence = 0.7;
       } else {
-        confidence = 0.5;
+        confidence = 0.6;
       }
 
       match.confidence = confidence;

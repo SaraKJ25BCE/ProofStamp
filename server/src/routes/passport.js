@@ -330,15 +330,7 @@ router.delete('/me', authMiddleware, async (req, res) => {
 
     if (passportRecord) {
       const passportId = passportRecord.id;
-      // We must manually delete dependent records if onDelete: Cascade is missing
       await prisma.$transaction([
-        prisma.aIAccessToken?.deleteMany({ where: { stamp: { passportId } } }).catch(() => null) || Promise.resolve(),
-        prisma.aITrainingDetection?.deleteMany({ where: { stamp: { passportId } } }).catch(() => null) || Promise.resolve(),
-        prisma.aIRegistryMonitor?.deleteMany({ where: { stamp: { passportId } } }).catch(() => null) || Promise.resolve(),
-        prisma.trainingDataAudit?.deleteMany({ where: { stamp: { passportId } } }).catch(() => null) || Promise.resolve(),
-        prisma.stampAnchor.deleteMany({ where: { stamp: { passportId } } }),
-        prisma.stampVersion.deleteMany({ where: { stamp: { passportId } } }),
-        prisma.monitorAlert.deleteMany({ where: { stamp: { passportId } } }),
         prisma.takedown.deleteMany({ where: { passportId } }),
         prisma.monitor.deleteMany({ where: { passportId } }),
         prisma.webhookDelivery.deleteMany({ where: { endpoint: { passportId } } }),

@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
   FileCheck, Plus, Calendar, Shield, FileImage, Music, Video,
-  Code, File, Package, Type, Lock, Download, Trash2, AlertTriangle, Scale
+  Code, File, Package, Type, Lock, Download, Trash2, AlertTriangle, Scale, Loader2
 } from 'lucide-react';
 import { downloadCounselPacket, legalStatusBadges, MARKETING } from '@/lib/legalProof';
 import { useToast } from '@/components/ui/toast';

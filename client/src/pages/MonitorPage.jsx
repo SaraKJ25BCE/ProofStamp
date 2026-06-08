@@ -17,6 +17,7 @@ export default function MonitorPage() {
   const [alerts, setAlerts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [scanning, setScanning] = useState(null);
+  const [wakingStego, setWakingStego] = useState(false);
   const [stamps, setStamps] = useState([]);
   const [tab, setTab] = useState('overview');
   const [capabilities, setCapabilities] = useState(null);
@@ -65,11 +66,23 @@ export default function MonitorPage() {
 
   async function runScan(stampId) {
     setScanning(stampId);
+    
+    // Only show the "waking" UI if it takes longer than 1 second (prevents flashing if already awake)
+    const wakeTimer = setTimeout(() => setWakingStego(true), 1000);
+    
     try {
+      // 1. Wake up the Python service
+      await api.get('/monitor/wake-stego');
+      clearTimeout(wakeTimer);
+      setWakingStego(false);
+
+      // 2. Perform the actual scan
       const res = await api.post(`/monitor/scan/${stampId}`);
       toast(`Scan complete: ${res.data.scanned} checked, ${res.data.matchesFound} matches, ${res.data.newAlerts} new alerts`, 'success');
       loadData();
     } catch (err) {
+      clearTimeout(wakeTimer);
+      setWakingStego(false);
       toast(err.response?.data?.error || 'Scan failed', 'error');
     } finally {
       setScanning(null);
@@ -128,6 +141,14 @@ export default function MonitorPage() {
                 You still get in-app alerts and <strong className="text-amber-100">Similar work on ProofStamp</strong> scans.
               </p>
             </div>
+          </div>
+        )}
+
+        {/* Waking Stego Indicator */}
+        {wakingStego && (
+          <div className="fixed bottom-6 right-6 bg-yellow-500/20 text-yellow-500 border border-yellow-500/50 px-5 py-4 rounded-2xl shadow-xl z-50 flex items-center gap-3 backdrop-blur-xl animate-fade-up">
+            <Loader2 className="h-5 w-5 animate-spin" />
+            <span className="font-semibold">waiting for python services hosted on render to get live</span>
           </div>
         )}
 
