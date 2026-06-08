@@ -29,6 +29,6 @@ services:
           name: proofstamp-db
           property: connectionString
       - key: STEGO_SERVICE_URL
-        value: ${proofstamp-stego.onrender.com}
+        value: https://proofstamp-stego.onrender.com
       - key: CLIENT_URL
         sync: false
