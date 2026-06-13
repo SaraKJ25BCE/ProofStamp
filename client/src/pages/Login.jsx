@@ -9,7 +9,7 @@ import { useAuth } from '@/lib/auth';
 import api from '@/lib/api';
 
 export default function Login() {
-  const apiUrl = import.meta.env.VITE_API_URL;
+  const apiUrl = import.meta.env.VITE_API_URL || import.meta.env.VITE_SERVER_URL || 'https://proofstamp-server.onrender.com';
   const navigate = useNavigate();
   const { login } = useAuth();
   const [searchParams] = useSearchParams();

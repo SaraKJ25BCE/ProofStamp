@@ -25,7 +25,8 @@ router.get(
     const user = req.user;
     const token = issueAuthToken(user);
     const needsSetup = user.passport?.username ? '0' : '1';
-    res.redirect(`${process.env.CLIENT_URL}/auth/callback?needsSetup=${needsSetup}&token=${token}`);
+    const clientUrl = process.env.CLIENT_URL ? process.env.CLIENT_URL.replace(/\/$/, '') : '';
+    res.redirect(`${clientUrl}/auth/callback?needsSetup=${needsSetup}&token=${token}`);
   }
 );
 

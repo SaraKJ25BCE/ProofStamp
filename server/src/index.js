@@ -53,7 +53,7 @@ const {
 
 const app = express();
 
-if (process.env.NODE_ENV === 'production' || process.env.TRUST_PROXY === 'true') {
+if (process.env.NODE_ENV === 'production' || process.env.TRUST_PROXY === 'true' || process.env.RENDER === 'true') {
   app.set('trust proxy', 1);
 }
 
@@ -63,7 +63,8 @@ app.use(
     frameguard: false,
   }),
 );
-const allowedOrigins = [process.env.CLIENT_URL];
+const clientUrl = process.env.CLIENT_URL ? process.env.CLIENT_URL.replace(/\/$/, '') : '';
+const allowedOrigins = [clientUrl];
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);

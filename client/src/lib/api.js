@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: import.meta.env.VITE_API_URL || import.meta.env.VITE_SERVER_URL || 'https://proofstamp-server.onrender.com',
 });
 
 api.interceptors.request.use((config) => {
