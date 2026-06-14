@@ -35,6 +35,38 @@ const { hasCreatorAttestation } = require('../config/legalProof');
 
 const router = express.Router();
 
+router.get('/check', async (req, res) => {
+  try {
+    const { hash } = req.query;
+    if (!hash) return res.status(400).json({ error: 'Hash is required' });
+    
+    const exact = await prisma.stamp.findFirst({
+      where: {
+        OR: [
+          { originalHash: hash },
+          { stampedHash: hash },
+        ],
+      },
+      include: { passport: { select: { username: true, displayName: true } } },
+    });
+
+    if (exact) {
+      const username = exact.passport?.username;
+      return res.json({
+        duplicate: true,
+        error: username
+          ? `This content is already registered on ProofStamp by @${username}`
+          : 'This content is already registered on ProofStamp',
+        existingStampId: exact.id,
+        registeredBy: username ? `@${username}` : null,
+      });
+    }
+    
+    return res.json({ duplicate: false });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to check hash' });
+  }
+});
 function getBaseUrl() {
   return process.env.SERVER_URL || `http://localhost:${process.env.PORT || 3001}`;
 }

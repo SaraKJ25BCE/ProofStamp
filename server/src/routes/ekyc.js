@@ -52,8 +52,12 @@ router.get('/setu/auth', requireAuth, async (req, res) => {
   const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
   const tokenParams = req.query.token ? `?token=${req.query.token}` : '';
 
-  if (SETU_CLIENT_ID === 'sandbox_client_id' || circuitBreaker.isOpen()) {
-    console.log('[Setu OKYC] Circuit open or sandbox keys missing. Falling back to async queue/mock.');
+  // The Setu dg-sandbox endpoint is currently returning 410 Gone globally.
+  // We force the mock flow immediately to prevent unnecessary timeouts and errors.
+  const FORCE_MOCK = true;
+
+  if (FORCE_MOCK || SETU_CLIENT_ID === 'sandbox_client_id' || circuitBreaker.isOpen()) {
+    console.log('[Setu OKYC] Upstream sandbox is 410 Gone. Falling back to mock flow.');
     return res.redirect(`${clientUrl}/mock-aadhaar${tokenParams}`);
   }
 

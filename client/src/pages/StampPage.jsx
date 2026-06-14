@@ -154,6 +154,18 @@ export default function StampPage() {
 
     const fileHash = await computeSHA256(f);
     setHash(fileHash);
+
+    // Check if the file is already stamped globally immediately after upload
+    try {
+      const res = await api.get(`/stamps/check?hash=${fileHash}`);
+      if (res.data.duplicate) {
+        let msg = res.data.error || 'This file is already registered';
+        if (res.data.existingStampId) msg += ` — Stamp ID: ${res.data.existingStampId}`;
+        setError(msg);
+      }
+    } catch (err) {
+      console.error('Hash check failed:', err);
+    }
   }, [mode]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -740,7 +752,7 @@ export default function StampPage() {
             type="submit"
             size="lg"
             className="w-full h-16 rounded-[2rem] bg-white text-black hover:bg-white/90 font-semibold text-lg shadow-xl transition-transform hover:scale-[1.02]"
-            disabled={(mode === 'single' && (!files[0] || !title)) || (mode === 'bulk' && files.length === 0) || loading}
+            disabled={(mode === 'single' && (!files[0] || !title)) || (mode === 'bulk' && files.length === 0) || loading || !!error}
           >
             {loading ? (
               <>

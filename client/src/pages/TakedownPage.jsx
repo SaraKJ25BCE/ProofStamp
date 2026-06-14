@@ -21,7 +21,7 @@ const STATUS_CONFIG = {
 
 export default function TakedownPage() {
   const { toast } = useToast();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [takedowns, setTakedowns] = useState([]);
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
