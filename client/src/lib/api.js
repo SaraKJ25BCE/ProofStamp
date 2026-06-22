@@ -32,12 +32,8 @@ api.interceptors.response.use(
       window.location.href = '/login';
     }
 
-    const productionErrorMsg = "the backend is not live right now";
     if (!error.response) {
-      error.response = { data: { error: productionErrorMsg } };
-    } else {
-      if (!error.response.data) error.response.data = {};
-      error.response.data.error = productionErrorMsg;
+      error.response = { data: { error: "the backend is not live right now" } };
     }
 
     return Promise.reject(error);
