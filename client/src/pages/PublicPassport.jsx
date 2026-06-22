@@ -18,7 +18,7 @@ export default function PublicPassport() {
         const res = await api.get(`/passport/${username}`);
         setPassport(res.data.passport);
       } catch (err) {
-        setError('the backend is not live right now');
+        setError(err.response?.status === 404 ? 'User not found' : (err.response?.data?.error || err.message));
       } finally {
         setLoading(false);
       }

@@ -154,14 +154,15 @@ export default function PrampBot() {
         }
       } else if (data.error) {
         console.error('Backend returned an error:', data.error);
-        setMessages(prev => [...prev, { role: 'model', text: 'the backend is not live right now' }]);
+        setMessages(prev => [...prev, { role: 'model', text: `Whimper... ${data.error}` }]);
       } else {
         setMessages(prev => [...prev, { role: 'model', text: 'Whimper... I received an empty response from my brain.' }]);
       }
     } catch (error) {
       if (error.name === 'AbortError') return;
       console.error('Pramp error:', error);
-      setMessages(prev => [...prev, { role: 'model', text: 'the backend is not live right now' }]);
+      const isOffline = error.message === 'Failed to fetch';
+      setMessages(prev => [...prev, { role: 'model', text: isOffline ? 'the backend is not live right now' : `Whimper... ${error.message || 'I lost connection to my brain. Try again later!'}` }]);
     } finally {
       setIsThinking(false);
       setAbortController(null);
