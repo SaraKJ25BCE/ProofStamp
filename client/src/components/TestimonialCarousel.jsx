@@ -3,43 +3,43 @@ import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 
 const testimonials = [
   {
-    name: "Krishnanandan",
+    name: "Legal Professional",
     role: "Lawyer",
     quote: "With AI making it so easy to produce content, proving who created something first is about to become a significant challenge, and ProofStamp offers a comfortable and affordable solution for this."
   },
   {
-    name: "Ankur Pastor",
+    name: "Expert Advocate",
     role: "Advocate",
     quote: "Most copyright cases come down to one simple question: Who can prove they had the file first? If you can’t prove it, you lose. ProofStamp solves this issue."
   },
   {
-    name: "Shubhi Pandey",
+    name: "Senior Advocate",
     role: "Advocate",
     quote: "ProofStamp clearly did their research on the BSA 2023. The automated Section 63 certificates is a great implementation. I can confidently hand these to a judge."
   },
   {
-    name: "Krishnanandan",
+    name: "Legal Professional",
     role: "Lawyer",
     quote: "When you connect a digital record to a verified identity, trusted timestamping, and a cryptographic audit trail, you create something very powerful. Today, an Indian courtroom will treat that evidence with great respect."
   },
   {
-    name: "Ankur Pastor",
+    name: "Expert Advocate",
     role: "Advocate",
     quote: "Screenshots and emails are easy to fake. I’d take ProofStamp to court because it provides admissible technical proof of prior possession."
   },
   {
-    name: "Shubhi Pandey",
+    name: "Senior Advocate",
     role: "Advocate",
     quote: "Proving chain of custody requires hiring an expensive forensics expert. ProofStamp makes this process easier by giving us everything we need right away."
   },
   {
-    name: "Namrita Sharma",
+    name: "Legal Counsel",
     role: "Advocate",
     quote: "Impressed by how ProofStamp combines technology and law. A very impressive technical implementation, but it addresses a messy, real world legal problem, and makes the life of lawyers easier."
   },
   {
-    name: "Jitendra Pathak",
-    role: "DSP, Actor, Influencer",
+    name: "Beta Tester",
+    role: "Actor, Influencer",
     quote: "Awesome product!!! would love to be a beta tester."
   }
 ];

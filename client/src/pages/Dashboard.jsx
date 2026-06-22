@@ -146,7 +146,7 @@ export default function Dashboard() {
               </div>
             </div>
             <Button asChild className="bg-indigo-600 hover:bg-indigo-500 text-white rounded-full px-6 h-12 whitespace-nowrap shadow-lg shadow-indigo-500/25 shrink-0">
-              <a href={`${import.meta.env.VITE_API_URL}/api/ekyc/setu/auth?token=${localStorage.getItem('token')}`}>
+              <a href={`${import.meta.env.VITE_API_URL || import.meta.env.VITE_SERVER_URL || 'https://proofstamp-server.onrender.com'}/api/ekyc/setu/auth?token=${localStorage.getItem('token')}`}>
                 <BadgeCheck className="h-5 w-5 mr-2" />
                 Verify Identity (Aadhaar)
               </a>
