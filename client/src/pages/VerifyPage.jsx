@@ -43,7 +43,7 @@ export default function VerifyPage() {
       });
       setResult(res.data);
     } catch (err) {
-      setError(err.response?.data?.error || 'Verification failed');
+      setError('the backend is not live right now');
     } finally {
       setLoading(false);
     }
@@ -68,7 +68,7 @@ export default function VerifyPage() {
       if (err.response?.status === 404) {
         setResult({ outcome: 'C', message: 'No ProofStamp found', stamp: null, passport: null });
       } else {
-        setError(err.response?.data?.error || 'Verification failed');
+        setError('the backend is not live right now');
       }
     } finally {
       setLoading(false);

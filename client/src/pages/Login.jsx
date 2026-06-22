@@ -53,7 +53,7 @@ export default function Login() {
       setInfo(res.data.devHint || 'Check your email for a 6-digit code.');
       setStep('code');
     } catch (err) {
-      setError(err.response?.data?.error || 'Failed to send code');
+      setError('the backend is not live right now');
     } finally {
       setLoading(false);
     }
