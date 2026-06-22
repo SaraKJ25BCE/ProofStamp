@@ -41,7 +41,7 @@ export default function MockAadhaarPage() {
     // Simulate verification delay
     setTimeout(() => {
       // Redirect to backend callback with mock=true and the auth token
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const apiUrl = import.meta.env.VITE_API_URL || import.meta.env.VITE_SERVER_URL || 'https://proofstamp-server.onrender.com';
       window.location.href = `${apiUrl}/api/ekyc/setu/callback?mock=true&token=${token}`;
     }, 2000);
   };

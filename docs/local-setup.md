@@ -12,7 +12,7 @@ The easiest way to run the project locally without having to manually manage Pyt
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/CodeThread386/pramp.git
+git clone https://github.com/your-username/pramp.git
 cd pramp
 ```
 

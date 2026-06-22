@@ -11,7 +11,7 @@ const prisma = new PrismaClient();
 const SETU_CLIENT_ID = process.env.SETU_CLIENT_ID || 'sandbox_client_id';
 const SETU_CLIENT_SECRET = process.env.SETU_CLIENT_SECRET || 'sandbox_client_secret';
 const SETU_PRODUCT_INSTANCE_ID = process.env.SETU_PRODUCT_INSTANCE_ID || 'sandbox_instance_id';
-const REDIRECT_URL = process.env.SERVER_URL ? `${process.env.SERVER_URL}/api/ekyc/setu/callback` : 'http://localhost:3001/api/ekyc/setu/callback';
+const REDIRECT_URL = process.env.SERVER_URL ? `${process.env.SERVER_URL.replace(/\/$/, '')}/api/ekyc/setu/callback` : 'https://proofstamp-server.onrender.com/api/ekyc/setu/callback';
 
 const SETU_BASE_URL = 'https://dg-sandbox.setu.co/api/okyc';
 
@@ -49,7 +49,7 @@ const circuitBreaker = {
  * Initialize Setu OKYC Session
  */
 router.get('/setu/auth', requireAuth, async (req, res) => {
-  const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+  const clientUrl = process.env.CLIENT_URL ? process.env.CLIENT_URL.replace(/\/$/, '') : 'https://proof-stamp.vercel.app';
   const tokenParams = req.query.token ? `?token=${req.query.token}` : '';
 
   // The Setu dg-sandbox endpoint is currently returning 410 Gone globally.
@@ -93,14 +93,14 @@ router.get('/setu/callback', requireAuth, async (req, res) => {
   try {
     let userInfo;
 
+    // Fetch passport ONCE to avoid shadowing and ensure we have it early
+    const userPassport = await prisma.passport.findUnique({ where: { userId: req.user.userId } });
+    if (!userPassport) throw new Error('Passport not found for user');
+
     if (mock === 'true' || SETU_CLIENT_ID === 'sandbox_client_id') {
-      // Fetch passport using userId to be completely safe against missing token payload fields
-      const userPassport = await prisma.passport.findUnique({ where: { userId: req.user.userId } });
-      if (!userPassport) throw new Error('Passport not found for user');
-      
       console.log('[Setu OKYC] Using Mock Aadhaar response (Keys not provided)');
       userInfo = {
-        name: userPassport?.displayName || 'John Doe',
+        name: userPassport.displayName || 'Test User',
         dob: '01-01-1990',
         gender: 'M',
         uuid: crypto.randomBytes(16).toString('hex')
@@ -131,10 +131,6 @@ router.get('/setu/callback', requireAuth, async (req, res) => {
       };
     }
 
-    // Update the Passport record
-    const userPassport = await prisma.passport.findUnique({ where: { userId: req.user.userId } });
-    if (!userPassport) throw new Error('Passport not found for user');
-
     await prisma.passport.update({
       where: { id: userPassport.id },
       data: {
@@ -146,12 +142,12 @@ router.get('/setu/callback', requireAuth, async (req, res) => {
     });
 
     // Redirect back to the dashboard with success
-    const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+    const clientUrl = process.env.CLIENT_URL ? process.env.CLIENT_URL.replace(/\/$/, '') : 'https://proof-stamp.vercel.app';
     res.redirect(`${clientUrl}/dashboard?ekyc=success`);
 
   } catch (err) {
     console.error('[Setu OKYC] Callback Error:', err);
-    const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+    const clientUrl = process.env.CLIENT_URL ? process.env.CLIENT_URL.replace(/\/$/, '') : 'https://proof-stamp.vercel.app';
     res.redirect(`${clientUrl}/dashboard?ekyc=error`);
   }
 });
