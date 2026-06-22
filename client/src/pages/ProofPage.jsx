@@ -21,7 +21,7 @@ export default function ProofPage() {
         const json = await response.json();
         setData(json);
       } catch (err) {
-        setError(err.message);
+        setError('the backend is not live right now');
       } finally {
         setLoading(false);
       }

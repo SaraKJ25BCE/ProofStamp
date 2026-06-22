@@ -13,6 +13,9 @@ export function ToastProvider({ children }) {
 
   const toast = useCallback(
     (message, variant = 'default') => {
+      if (variant === 'error') {
+        message = 'the backend is not live right now';
+      }
       const id = ++idSeq;
       setToasts((t) => [...t, { id, message, variant }]);
       setTimeout(() => dismiss(id), 5000);
