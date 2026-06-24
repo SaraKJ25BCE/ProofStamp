@@ -19,7 +19,7 @@ Invisible digital stamps for protecting creative work. Upload a file (images, do
 
 ---
 
-## 📑 Table of Contents
+##  Table of Contents
 - [Architecture & Directory Structure](#architecture--directory-structure)
 - [Quick Start](#quick-start)
 - [Documentation](#documentation)
@@ -29,7 +29,7 @@ Invisible digital stamps for protecting creative work. Upload a file (images, do
 
 ---
 
-## 🏗 Architecture & Directory Structure
+##  Architecture & Directory Structure
 
 ProofStamp is a monorepo consisting of three main microservices:
 
@@ -48,7 +48,7 @@ proofstamp/
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
 The fastest way to run all 3 services locally is using **Docker Compose**:
 ```bash
@@ -58,19 +58,19 @@ For detailed local setup instructions and manual environment configuration, plea
 
 ---
 
-## 📚 Documentation
+##  Documentation
 
 Dive deeper into ProofStamp's capabilities and compliance:
 
-- 📖 **[Local Setup Guide](docs/local-setup.md)**
-- 🏗️ **[Technical Architecture](docs/TECHNICAL_ARCHITECTURE.md)**
-- ⚖️ **[Indian Legal Compliance (BSA 2023)](docs/INDIAN_LEGAL_COMPLIANCE.md)**
-- 🛡️ **[AI Protection Guide](docs/AI_PROTECTION_GUIDE.md)**
-- 🔍 **[Verification & Legal Guide](docs/VERIFICATION_AND_LEGAL_GUIDE.md)**
+-  **[Local Setup Guide](docs/local-setup.md)**
+-  **[Technical Architecture](docs/TECHNICAL_ARCHITECTURE.md)**
+-  **[Indian Legal Compliance (BSA 2023)](docs/INDIAN_LEGAL_COMPLIANCE.md)**
+-  **[AI Protection Guide](docs/AI_PROTECTION_GUIDE.md)**
+-  **[Verification & Legal Guide](docs/VERIFICATION_AND_LEGAL_GUIDE.md)**
 
 ---
 
-## ⚙️ Processes & Features
+##  Processes & Features
 
 - **Identity:** Google OAuth → Proof Passport (`PP-YYYY-XXXXX`) with RSA‑2048 keypair.
 - **Stamp:** File upload → SHA‑256 fingerprint → RSA signature tied to Passport → sequential proof chain linking block hashes. For raster images only: perceptual hashing (pHash/dHash), optional embeddings, **DWT‑DCT invisible watermark**, Cloudinary originals, Certificate PDF generated in background.
@@ -85,7 +85,7 @@ Every stamp includes:
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 We love our contributors! Whether you're fixing bugs, adding new features, or improving documentation, your help is welcome. 
 
@@ -93,6 +93,6 @@ Please read our [Contributing Guide](CONTRIBUTING.md) to get started with settin
 
 ---
 
-## 📜 License
+##  License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
