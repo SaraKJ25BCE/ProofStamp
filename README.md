@@ -31,6 +31,10 @@ Invisible digital stamps for protecting creative work. Upload a file (images, do
 
 ##  Architecture & Directory Structure
 
+<div align="center">
+  <img src="./docs/arch.png" alt="ProofStamp Architecture Diagram" width="900">
+</div>
+
 ProofStamp is a monorepo consisting of three main microservices:
 
 ```text
