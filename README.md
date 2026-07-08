@@ -13,6 +13,7 @@
 <div align="center">
   <img src="./docs/imgs/landingpage.jpg" alt="Landing Page" width="700">
 </div>
+
 ---
 
 Invisible digital stamps for protecting creative work. Upload a file (images, documents, audio, video, etc.), register a cryptographic hash and RSA identity signature, optionally embed resilient image watermarks for photos, and verify authenticity later through multiple layers.
@@ -80,32 +81,43 @@ Dive deeper into ProofStamp's capabilities and compliance:
 ##  Processes & Features
 
 - **Identity:** Google OAuth → Proof Passport (`PP-YYYY-XXXXX`) with RSA‑2048 keypair.
+<br>
 <div align="center">
-  <img src="./docs/imgs/login.jpg" width="260">
-  ➜
-  <img src="./docs/imgs/no_assets.jpg" width="260">
-  ➜
-  <img src="./docs/imgs/protect.jpg" width="260">
+  <img src="./docs/imgs/login.jpg" width="700"><br><br>
+  ↓<br><br>
+  <img src="./docs/imgs/no_assets.jpg" width="700"><br><br>
+  ↓<br><br>
+  <img src="./docs/imgs/protect.jpg" width="700">
 </div>
-- **Stamp:** File upload → SHA‑256 fingerprint → RSA signature tied to Passport → sequential proof chain linking block hashes. For raster images only: perceptual hashing (pHash/dHash), optional embeddings, **DWT‑DCT invisible watermark**, Cloudinary originals, Certificate PDF generated in background.
-<div align="center">
-  <img src="./docs/imgs/registered.jpg" width="260">
-  ➜
-  <img src="./docs/imgs/proof.jpg" width="260">
-  ➜
-  <img src="./docs/imgs/assets.jpg" width="260">
-</div>
-- **Verification:** Upload or Stamp ID lookup → Exact hash → Perceptual / embedding similarity → watermark extract → cryptographic signature & chain checks where applicable.
-<div align="center">
-  <img src="./docs/imgs/verified.jpg" width="260">
-</div>
-- **Enforcement:** Similarity detection → infringement evidence compilation → auto-generated takedown package (DMCA notice, certificates, proof chain, and supporting artifacts) → creator review and submission.
-<div align="center">
-  <img src="./docs/imgs/alerts.jpg" width="260">
-  ➜
-  <img src="./docs/imgs/takedown.jpg" width="260">
-</div>
+<br>
 
+- **Stamp:** File upload → SHA‑256 fingerprint → RSA signature tied to Passport → sequential proof chain linking block hashes. For raster images only: perceptual hashing (pHash/dHash), optional embeddings, **DWT‑DCT invisible watermark**, Cloudinary originals, Certificate PDF generated in background.
+<br>
+<div align="center">
+  <img src="./docs/imgs/registered.jpg" width="700"><br><br>
+  ↓<br><br>
+  <img src="./docs/imgs/proof.jpg" width="700"><br><br>
+  ↓<br><br>
+  <img src="./docs/imgs/assets.jpg" width="700">
+</div>
+<br>
+
+- **Verification:** Upload or Stamp ID lookup → Exact hash → Perceptual / embedding similarity → watermark extract → cryptographic signature & chain checks where applicable.
+<br>
+<div align="center">
+  <img src="./docs/imgs/verified.jpg" width="700">
+</div>
+<br>
+
+- **Enforcement:** Similarity detection → infringement evidence compilation → auto-generated takedown package (DMCA notice, certificates, proof chain, and supporting artifacts) → creator review and submission.
+<br>
+<div align="center">
+  <img src="./docs/imgs/alerts.jpg" width="700"><br><br>
+  ↓<br><br>
+  <img src="./docs/imgs/takedown.jpg" width="700">
+</div>
+<br>
+<br>
 
 ### Legal Proof (Enabled for all users)
 Every stamp includes:
