@@ -11,7 +11,7 @@
 </div>
 
 <div align="center">
-  <img src="./docs/imgs/landingpage.jpg" alt="Landing Page" width="900">
+  <img src="./docs/imgs/landingpage.jpg" alt="Landing Page" width="700">
 </div>
 ---
 
@@ -81,29 +81,29 @@ Dive deeper into ProofStamp's capabilities and compliance:
 
 - **Identity:** Google OAuth → Proof Passport (`PP-YYYY-XXXXX`) with RSA‑2048 keypair.
 <div align="center">
-  <img src="./docs/imgs/login.jpg" width="220">
+  <img src="./docs/imgs/login.jpg" width="260">
   ➜
-  <img src="./docs/imgs/no_assets.jpg" width="220">
+  <img src="./docs/imgs/no_assets.jpg" width="260">
   ➜
-  <img src="./docs/imgs/protect.jpg" width="220">
+  <img src="./docs/imgs/protect.jpg" width="260">
 </div>
 - **Stamp:** File upload → SHA‑256 fingerprint → RSA signature tied to Passport → sequential proof chain linking block hashes. For raster images only: perceptual hashing (pHash/dHash), optional embeddings, **DWT‑DCT invisible watermark**, Cloudinary originals, Certificate PDF generated in background.
 <div align="center">
-  <img src="./docs/imgs/registered.jpg" width="220">
+  <img src="./docs/imgs/registered.jpg" width="260">
   ➜
-  <img src="./docs/imgs/proof.jpg" width="220">
+  <img src="./docs/imgs/proof.jpg" width="260">
   ➜
-  <img src="./docs/imgs/assets.jpg" width="220">
+  <img src="./docs/imgs/assets.jpg" width="260">
 </div>
 - **Verification:** Upload or Stamp ID lookup → Exact hash → Perceptual / embedding similarity → watermark extract → cryptographic signature & chain checks where applicable.
 <div align="center">
-  <img src="./docs/imgs/verified.jpg" width="220">
+  <img src="./docs/imgs/verified.jpg" width="260">
 </div>
 - **Enforcement:** Similarity detection → infringement evidence compilation → auto-generated takedown package (DMCA notice, certificates, proof chain, and supporting artifacts) → creator review and submission.
 <div align="center">
-  <img src="./docs/imgs/alerts.jpg" width="220">
+  <img src="./docs/imgs/alerts.jpg" width="260">
   ➜
-  <img src="./docs/imgs/takedown.jpg" width="220">
+  <img src="./docs/imgs/takedown.jpg" width="260">
 </div>
 
 
