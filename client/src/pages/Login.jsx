@@ -46,14 +46,12 @@ export default function Login() {
     navigate(needsSetup ? '/setup' : '/dashboard');
   }
 
-  async function handleGoogleLogin(e) {
-    e.preventDefault();
-    setIsGoogleLoading(true);
-    // Simulate realistic network handshake delay for premium feel
-    await new Promise(resolve => setTimeout(resolve, 800));
-    setIsGoogleLoading(false);
-    toast('the backend is not live right now', 'error');
-  }
+  function handleGoogleLogin(e) {
+  e.preventDefault();
+  setIsGoogleLoading(true);
+
+  window.location.href = `${apiUrl}/auth/google`;
+}
 
   async function handleSendCode() {
     setError('');
